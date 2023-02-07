@@ -39,6 +39,7 @@ height.fit=fitted(spruce.lm)
 plot(height.res~height.fit)
 trendscatter(height.res~height.fit) # Quadratic Function
 plot(spruce.lm)
+normcheck(spruce.lm, shapiro.wilk = TRUE)
 ```
 
 # Task 4
