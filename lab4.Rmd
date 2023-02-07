@@ -38,7 +38,7 @@ height.res=residuals(spruce.lm)
 height.fit=fitted(spruce.lm)
 plot(height.res~height.fit)
 trendscatter(height.res~height.fit) # Quadratic Function
-
+plot(spruce.lm)
 ```
 
 # Task 4
