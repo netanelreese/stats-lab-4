@@ -1751,6 +1751,37 @@ border-radius: 0px;
 </div>
 <div id="task-7" class="section level1">
 <h1>Task 7</h1>
+<p>We start with two lines with a common point <span class="math inline">\(x_k\)</span> <span class="math display">\[
+l_1:y-\beta_0 + \beta_1x
+\]</span> <span class="math display">\[
+l_2:y-\beta_0+\delta+(\beta_1+\beta_2)x
+\]</span> We now need to plug in point <span class="math inline">\(x_k\)</span> <span class="math display">\[
+y_k=\beta_0+\beta_1x_k=\beta_0+\delta+(\beta_1+\beta_2)x_k
+\]</span> Now we Distribute <span class="math inline">\(x_k\)</span> on
+the right side <span class="math display">\[
+\beta_0+\beta_1x_k-\beta_0+\delta+\beta_1x_k+\beta_2x_k
+\]</span> <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1x\)</span> cancel out giving us <span class="math display">\[
+0=\delta+\beta_2x_k
+\]</span> So we get <span class="math display">\[
+\delta= -\beta_2x_k
+\]</span> For <span class="math inline">\(l_2\)</span>, similarily <span class="math display">\[
+l_2:y-\beta_0+\delta+(\beta_1+\beta_2)x
+\]</span> <span class="math display">\[
+l_2:y+\beta_0+\delta+(\beta_1+\beta_2)x
+\]</span> Substitute <span class="math inline">\(\delta=-\beta_2x_k\)</span> <span class="math display">\[
+l_2:y+\beta_0-\beta_2x_k+(\beta_1+\beta_2)x
+\]</span> Now we distribute <span class="math inline">\(x\)</span> <span class="math display">\[
+l_2:y+\beta_0-\beta_2x_k+\beta_1x+\beta_2x
+\]</span> Rearranging gives us <span class="math display">\[
+l_2:y+\beta_0+\beta_1x+\beta_2x-\beta_2x_k
+\]</span> Factor <span class="math display">\[
+l_2:y=\beta_0+\beta_1x+\beta_2(x-x_k)
+\]</span> This leaves us with an <span class="math inline">\(l_2\)</span> described as an adjustment of <span class="math inline">\(l_1\)</span></p>
+<p>Now we can use our indicator function to know where it should and
+should not include the adjustment <span class="math display">\[
+y=\beta_0+\beta_1x+\beta_2(x-x_k)I(x&gt;x_k)
+\]</span> Fulfilling <span class="math inline">\(I()\)</span> being 1 if
+<span class="math inline">\(x&gt;x_k\)</span> and 0 otherwise.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>sp2.df<span class="ot">=</span><span class="fu">within</span>(spruce, X<span class="ot">&lt;-</span>(BHDiameter<span class="dv">-20</span>)<span class="sc">*</span>(BHDiameter<span class="sc">&gt;</span><span class="dv">20</span>)) <span class="co"># this makes a new variable and places it within the same df</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>sp2.df</span></code></pre></div>
 <pre><code>##    BHDiameter Height   X

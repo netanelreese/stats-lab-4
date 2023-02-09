@@ -98,6 +98,61 @@ cooks20x(quad2.lm)
 
 # Task 7
 
+We start with two lines with a common point $x_k$
+$$
+l_1:y-\beta_0 + \beta_1x
+$$
+$$
+l_2:y-\beta_0+\delta+(\beta_1+\beta_2)x
+$$
+We now need to plug in point $x_k$
+$$
+y_k=\beta_0+\beta_1x_k=\beta_0+\delta+(\beta_1+\beta_2)x_k
+$$
+Now we Distribute $x_k$ on the right side
+$$
+\beta_0+\beta_1x_k-\beta_0+\delta+\beta_1x_k+\beta_2x_k
+$$
+$\beta_0$ and $\beta_1x$ cancel out giving us
+$$
+0=\delta+\beta_2x_k
+$$
+So we get
+$$
+\delta= -\beta_2x_k
+$$
+For $l_2$, similarily
+$$
+l_2:y-\beta_0+\delta+(\beta_1+\beta_2)x
+$$
+$$
+l_2:y+\beta_0+\delta+(\beta_1+\beta_2)x
+$$
+Substitute $\delta=-\beta_2x_k$
+$$
+l_2:y+\beta_0-\beta_2x_k+(\beta_1+\beta_2)x
+$$
+Now we distribute $x$
+$$
+l_2:y+\beta_0-\beta_2x_k+\beta_1x+\beta_2x
+$$
+Rearranging gives us
+$$
+l_2:y+\beta_0+\beta_1x+\beta_2x-\beta_2x_k
+$$
+Factor
+$$
+l_2:y=\beta_0+\beta_1x+\beta_2(x-x_k)
+$$
+This leaves us with an $l_2$ described as an adjustment of $l_1$
+
+Now we can use our indicator function to know where it should and should not include the adjustment
+$$
+y=\beta_0+\beta_1x+\beta_2(x-x_k)I(x>x_k)
+$$
+Fulfilling $I()$ being 1 if $x>x_k$ and 0 otherwise.
+
+
 ```{r}
 sp2.df=within(spruce, X<-(BHDiameter-20)*(BHDiameter>20)) # this makes a new variable and places it within the same df
 sp2.df
