@@ -62,6 +62,7 @@ normcheck(quad.lm, shapiro.wilk = T)
 
 ```{r}
 summary(quad.lm)
+coef(quad.lm)
 data = 15:24
 predict20x(quad.lm,data.frame(BHDiameter = data, `I(BhDiameter)^2`=data^2))
 predict(spruce.lm, data.frame(BHDiameter=c(15,18,20)))
@@ -83,20 +84,46 @@ MSS/TSS
 
 ```{r}
 cooks20x(quad.lm)
+# Cook's distance or Cook's D is a commonly used estimate of the influence of a data point when performing a least-squares regression analysis.
 quad2.lm=lm(Height~BHDiameter + I(BHDiameter^2) , data=spruce[-24,])
 summary(quad2.lm)
-summary(quad.lm)# Cook's distance or Cook's D is a commonly used estimate of the influence of a data point when performing a least-squares regression analysis.
+summary(quad.lm)
+layout(matrix(1:2,nc=2,byrow=TRUE))
+cooks20x(quad.lm)
+cooks20x(quad2.lm)
+# The greatest cooks distance is now half of the previous so we are rocking and rolling!
+
+
 ```
 
 # Task 7
 
 ```{r}
+sp2.df=within(spruce, X<-(BHDiameter-20)*(BHDiameter>20)) # this makes a new variable and places it within the same df
+sp2.df
 
+lmp=lm(Height~BHDiameter + X,data=sp2.df)
+tmp=summary(lmp)
+names(tmp)
+myf = function(x,coef){
+  coef[1]+coef[2]*(x) + coef[3]*(x-18)*(x-18>0)
+}
+plot(spruce,main="Piecewise regression")
+myf(0, coef=tmp$coefficients[,"Estimate"])
+curve(myf(x,coef=tmp$coefficients[,"Estimate"] ),add=TRUE, lwd=2,col="Blue")
+abline(v=18)
+text(18,16,paste("R sq.=",round(tmp$r.squared,4) ))
 ```
 
 # Task 8
 
 ```{r}
-
+library(MATH4753REES)
+myfun(10)
 ```
 
+# EXTRA!!!
+
+```{r}
+
+```
