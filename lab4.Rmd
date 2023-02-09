@@ -120,10 +120,34 @@ text(18,16,paste("R sq.=",round(tmp$r.squared,4) ))
 ```{r}
 library(MATH4753REES)
 myfun(10)
+# The function squares the input parameter
 ```
 
 # EXTRA!!!
 
 ```{r}
+plot(Height~BHDiameter,bg="Blue",pch=21,cex=1.2,
+ylim=c(0,max(Height)),xlim=c(0,max(BHDiameter)), 
+main="Spruce height prediction",data=spruce)
 
+#Make a quadratic model
+quad.lm=lm(Height~BHDiameter + I(BHDiameter^2),data=spruce)
+
+# Find the coefficients
+coef(quad.lm)
+
+#Make a function that produces heights for inputs "x"
+myplot=function(x){
+ 0.86089580 +1.46959217*x  -0.02745726*x^2
+ }
+
+# add the quadratic to the points 
+curve(myplot, lwd=2, col="steelblue",add=TRUE)
+
+#Place segments (residuals) on the plot (except for the 3 largest cooks distances. 18, 21, 24)
+with(spruce[-c(18,21,24),],segments(BHDiameter, Height, BHDiameter, height.qfit[-c(18,21,24)]) )
+with(spruce[c(18,21,24),],segments(BHDiameter, Height, BHDiameter, height.qfit[c(18,21,24)], col="Red", lwd=3) )
+with( spruce, arrows(5,Height[24], BHDiameter[24], Height[24],lwd=2,col="Blue"))
+with(spruce,text(2,Height[24], paste("Highest Cook's","\n", "distance",sep=" ")))
+with(spruce, text(BHDiameter,Height, 1:36,cex=0.5,pos=4))
 ```
