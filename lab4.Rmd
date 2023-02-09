@@ -6,8 +6,8 @@ output:
   html_document:
     toc: yes
     toc_float: yes
-    theme: spacelab
-    highlight: pygments
+    theme: darkly
+    highlight: zenburn
 ---
 
 ```{r setup, include=FALSE}
@@ -40,15 +40,63 @@ plot(height.res~height.fit)
 trendscatter(height.res~height.fit) # Quadratic Function
 plot(spruce.lm)
 normcheck(spruce.lm, shapiro.wilk = TRUE)
+# P-Value = 0.29
+# The null hypothesis in this case is 0.5 when we set it in the trendscatter code snippet
+# The data is not viable because of the presence of a quadratic formula when plotting the residuals.
 ```
 
 # Task 4
 
+```{r}
+quad.lm = with(spruce, lm(Height~BHDiameter+I(BHDiameter^2)))
+plot(quad.lm)
+quad.res=residuals(quad.lm)
+quad.fit=fitted(quad.lm)
+plot(quad.lm)
+normcheck(quad.lm, shapiro.wilk = T)
+# P - Value = 0.684
+# 0.684 > 0.5 so we are good!!!
+```
+
 # Task 5
+
+```{r}
+summary(quad.lm)
+data = 15:24
+predict20x(quad.lm,data.frame(BHDiameter = data, `I(BhDiameter)^2`=data^2))
+predict(spruce.lm, data.frame(BHDiameter=c(15,18,20)))
+anova(quad.lm, spruce.lm)
+height.qfit=fitted(quad.lm)
+
+RSS=with(spruce, sum((Height-height.qfit)^2))
+RSS
+MSS = with(spruce, sum((height.qfit-mean(Height))^2))
+MSS
+
+TSS = with(spruce, sum((Height-mean(Height))^2))
+TSS
+MSS/TSS
+
+```
 
 # Task 6
 
+```{r}
+cooks20x(quad.lm)
+quad2.lm=lm(Height~BHDiameter + I(BHDiameter^2) , data=spruce[-24,])
+summary(quad2.lm)
+summary(quad.lm)# Cook's distance or Cook's D is a commonly used estimate of the influence of a data point when performing a least-squares regression analysis.
+```
+
 # Task 7
 
+```{r}
+
+```
+
 # Task 8
+
+```{r}
+
+```
 
